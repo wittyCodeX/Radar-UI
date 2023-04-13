@@ -1,0 +1,323 @@
+.radar {
+  /* We use absolute position to place our radar anywhere on the screen. */
+  position: absolute;
+  /* Absolute positioning ignores standard top-to-bottom flow elements in 
+                websites and istead positions element relative to either the screen or
+                the closest parent with same absolute or `relative` positioning. */
+
+  right: 2rem;
+  bottom: 0rem;
+  /* `right` and `bottom` properties would locate the element in a way, that
+                it's right edge would be on a specified distance from right edge of parent
+                element and same for bottom edge. Basically here we set that there is small
+                distance from element to the right and it sticks to the bottom with its bottom
+                edge. This will work regardless of the size of element. */
+
+  width: 12rem;
+  height: 12rem;
+  /* For now we just set a fixed size of element: 10 on 10 rems */
+
+  /* Configuration for border is a mixed set:
+                */
+  border: 0.3rem black solid;
+  /* 
+                    Firstly we define that border would be 0.3rem, black and solid
+                    At this point that config works on all borders - top, bottom, etc
+                */
+  border-bottom-width: 0rem;
+  /* 
+                    Then we override part of previous style to define that on 
+                    bottom edge there will be no border, or rather border is of 
+                    width 0, which is essentially no border.
+                */
+  border-top-left-radius: 5%;
+  border-top-right-radius: 5%;
+  /* 
+                    Then on two corners we would define that border has to shaped
+                    as a circle quarters with the radius, which is 5 percent of element size.
+                */
+
+  background: black;
+  /*
+                    We would want a screen of our radar to be simply black.
+                */
+}
+.grid {
+  /* We again use absolute positioning */
+  position: absolute;
+  /* 
+            However, in this case, position would be defined within
+            parent element, because of how `absolute` position works
+            related to the closest parent with same or `relative`
+            positioning.
+        */
+  width: 12rem;
+  height: 12rem;
+  /* 
+            We are setting the same size on the grid as the screen itself,
+            so it is neatly fit to it.
+        */
+
+  /* 
+            Border is configured with 100 percent radius, so that all 
+            corners are rounded as much as possible, which effectively 
+            makes the element a circle.
+        */
+  border-radius: 100%;
+
+  /* 
+            Background property helps us to configure how the element insides look like.
+            In here we use a bunch of gradients, each of them works in addition to others.
+        */
+  background: linear-gradient(
+      0deg,
+      transparent 49.6%,
+      #03b627 50%,
+      transparent 50.4%
+    ),
+    linear-gradient(90deg, transparent 49.6%, #03b627 50%, transparent 50.4%),
+    /* 
+                These two first gradients are two lines: horizontal and vertical.
+                Firstly we describe the horizontal line. Horizontal line is defined as a gradient
+                going bottom to top, so it firstly defines the angle at which it lies to the y axis:
+                0 degrees. Basically 0 degrees means from bottom to top.
+                Next three parameters are color points. We define that we want transparent color
+                from the start of gradient up to 49.6 percent of the lenght of the element.
+                Next point at 50 percent defines that the greenish color needs to be at that 
+                location and in between - color would be gradually changed from transparent 
+                to that greenish color. Then we again define that 0.4 percent later, the color
+                should be transparent again and up to the end of element it would remain transparent.
+                That definition makes up a line in the middle with that green color.
+
+                Secondly we define the same kind of line, but rotated on 90 degrees, which would
+                be a vertical line.
+            */
+      linear-gradient(45deg, transparent 49.9%, #03b627 50%, transparent 50.2%),
+    /*
+                Each of the following linear gradients have slightly smalleer size so that
+                lines under not strict angles, would be a bit less wide. 
+            */
+      linear-gradient(-45deg, transparent 49.9%, #03b627 50%, transparent 50.2%),
+    linear-gradient(30deg, transparent 49.9%, #03b627 50%, transparent 50.2%),
+    linear-gradient(-30deg, transparent 49.9%, #03b627 50%, transparent 50.2%),
+    linear-gradient(60deg, transparent 49.9%, #03b627 50%, transparent 50.2%),
+    linear-gradient(-60deg, transparent 49.9%, #03b627 50%, transparent 50.2%),
+    linear-gradient(75deg, transparent 49.9%, #03b627 50%, transparent 50.2%),
+    linear-gradient(-75deg, transparent 49.9%, #03b627 50%, transparent 50.2%),
+    linear-gradient(15deg, transparent 49.9%, #03b627 50%, transparent 50.2%),
+    linear-gradient(-15deg, transparent 49.9%, #03b627 50%, transparent 50.2%),
+    repeating-radial-gradient(
+      transparent 5.8%,
+      transparent 18%,
+      #03b627 18.6%,
+      transparent 18.9%
+    );
+  /*
+                Final gradient is a repeated radial gradient. This would create a bunch
+                of circles due to the way repeating a gradient works. Basically we
+                define that in places where gradient is not defined - it would repeat
+                itself over and over again in circles instead of just continueing the way
+                that latest color point was set.
+                Two transparent points at 18 and 18.9 percent are outline edges of the line
+                with greenish color as point between them at 18.6 defines.
+                Point at 5.8 is basically used to setup a distance between circular line, 
+                where grid is transparent. This helps with defining how far circles would
+                be spaced apart. 
+            */
+}
+.scanning {
+  /*
+            Relatively to radar screen we would want to place the scanning 
+            ray at exactly the top left corner of it.
+        */
+  position: absolute;
+  top: 0px;
+  left: 0px;
+
+  width: 50%;
+  height: 50%;
+  /* 
+            Now we set the size of this element to be a half that of the parent.
+        */
+
+  border-top-left-radius: 100%;
+  background: linear-gradient(45deg, transparent 50%, #6ae01c 100%);
+  /*
+            This here uses gradient again, however this time we point it 
+            at an angle between 0 and 90 and make it slowly change from 
+            transparent in the middle to completely green at the end.
+            At the same time we set only one of angles to be a 100 percent
+            rounded, which would leave us with a quarter of a circle.
+        */
+
+  animation: rotating 4s infinite;
+  animation-timing-function: linear;
+  transform-origin: bottom right;
+  /* 
+            This part is animating scanning ray, so it would be rotating 
+            around the center of the radar screen.
+            We define name of animation (which would be defined a bit later)
+            to use, then how much time it takes to make a full turn - 4 seconds,
+            then in which patern to repeat that animation - we set it to be
+            infinitely repeated.
+            Timing function of animation sets it to always animate at the same
+            linear speed without speeding up or slowing down at any point.
+            
+            Finally we define the pivot point of transformation. Since we want
+            to rotate the ray around he center of screen, which is for the ray 
+            itself is the bottom right corner - that is what we have to set
+            for `transform-origin`.
+        */
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* 
+        Now to animation definition - we describe that it changes from transformation
+        without any rotation to transformation, which rotates the element 360 degrees
+        around the pivot point set before.
+    */
+.point-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+.point {
+  width: 1rem;
+  height: 1rem;
+  /* 
+            We set the fixed size of point. We might later need
+            to make it dynamic if for the purpose of game it would
+            require to be different by some reason.
+        */
+
+  position: absolute;
+  left: -0.5rem;
+  top: -0.5rem;
+  /* 
+            To make sure that the point is a circle around the top
+            left corner of container - we move it relative to it
+            by a distance, which is half of the size of point.
+        */
+
+  background: radial-gradient(#03b627 20%, transparent 60%);
+  /* 
+            Radial gradient would help us make this point a nice 
+            looking circle of greenish color.
+        */
+}
+.pulse {
+  animation-name: pulse;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in;
+  /* 
+            This animation has different duration - 1 second. It also
+            would repeat infintely. You might notice that here we split 
+            animation definition in a different properties, this oftenly 
+            happens in CSS that there is several properties to specify 
+            different parts of the same thing (here - animation) and then
+            one shortcut to simply define all of them in one property,
+            how we did before with `animation: rotating 4s infinite`
+            
+            The timing function we use here is different, because we want
+            the pulsing to look more alive, for each it would change speed
+            in a no-linear manner. This would look more smooth and natural.
+        */
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 
+        Pulsing would be transforming the element by scaling it.
+        It starts with 1, then increases element size by 1.8 and
+        then returns back to 1. 
+        Note how in this animation we define the time points using 
+        percentage rather than names `from` and `to`, since we want
+        to define intermediate point - 1.8, while corner points
+        are the same - 1.
+    */
+.point-box-corner {
+  border-color: #a9ffa9;
+  border-style: solid;
+  border-width: 0px;
+  /* 
+            We define here how corner would have a border.
+            The color, width and style of border are defined separately
+            here, not with a shortcut `border`, as we did earlier.
+
+            Now this seems like there won't be any border at all, since
+            we set width to 0px.. However, in the later classes we are going
+            to override this for the specific edges: top, left, right and bottom.
+        */
+
+  position: absolute;
+  /* 
+            We define absolute positioning here, but do not place
+            any specific coordinates. Those would be defined by later classes.
+        */
+
+  width: 0.15rem;
+  height: 0.15rem;
+  /* 
+            We need to give element some size, so that border would be around it.
+        */
+
+  --point-box-offset: -0.7rem;
+  --point-box-border-width: 0.05rem;
+  /* 
+            This here we start using some advanced CSS feature: variables.
+            To avoid repeating later the same thing in different places and allow
+            to change it eaesier, we are defining two variables - for width and for
+            offset, which we would later refer to.
+        */
+}
+
+.point-box-corner.top {
+  border-top-width: var(--point-box-border-width);
+  top: var(--point-box-offset);
+}
+/* 
+        Both of top corners - top left and top right are going
+        to have something in common: we want them to be positioned
+        relative to the top edge - at the offset specified in the 
+        variable earlier as well as we want both of them to 
+        have non-zero top width.
+
+        Following are three classes each with the similar structure.
+        Html code that you have seen before uses pairs of them, but 
+        each pair is unique: there is only one top bottom corner.
+        There are four combinations and we use all of them combining
+        with the shared `point-box-corner`.
+    */
+
+.point-box-corner.bottom {
+  border-bottom-width: var(--point-box-border-width);
+  bottom: var(--point-box-offset);
+}
+
+.point-box-corner.right {
+  border-right-width: var(--point-box-border-width);
+  right: var(--point-box-offset);
+}
+
+.point-box-corner.left {
+  border-left-width: var(--point-box-border-width);
+  left: var(--point-box-offset);
+}
